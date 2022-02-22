@@ -2,12 +2,14 @@
 //console.log("test");
 
 const express = require("express");
-const movie = require("./Movie_Data/data.json");
+const cors = require('cors');
+const movie = require("./data.json");
 const app = express();
+app.use(cors());
 const axios = require("axios");
 const dotenv = require("dotenv");
 dotenv.config();
-const APIKEY = process.env.APIKEY;
+const APIKEY = "4a19a377a6dba141e32aa68fb5f3fe00";
 function Movie(title, genre_ids, original_language, original_title, poster_path, video, vote_average, overview, release_date, vote_count, id, adult, backdrop_path, popularity, media_type) {
     this.title = title;
     this.genre_ids = genre_ids;
@@ -45,8 +47,9 @@ function favoritePageHandler(req, res) {
 }
 function trendingPageHandler(req, res) {
     let result = [];
-    let response = axios.get(`https://api.themoviedb.org/3/trending/all/week?api_key=${APIKEY}&language=en-US`)
+    axios.get(`https://api.themoviedb.org/3/trending/all/week?api_key=${APIKEY}&language=en-US`)
         .then(apiResponse => {
+            console.log(apiResponse);
             apiResponse.data.results.map(value => {
                 let oneMovie = new Movie(value.id || "N/A", value.title || "N/A", value.release_date || "N/A", value.poster_path || "N/A", value.overview || "N/A");
                 result.push(oneMovie);
@@ -61,7 +64,7 @@ function searchPageHandler(req, res) {
     const search = req.query.Movie;
     let result = [];
     console.log(req);
-    let response = axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${APIKEY}&language=en-US&query=${search}&page=2`)
+    axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${APIKEY}&language=en-US&query=${search}&page=2`)
         .then(apiResponse => {
             apiResponse.data.results.map(value => {
                 let oneMovie = new Movie(value.id || "N/A", value.title || "N/A", value.release_date || "N/A", value.poster_path || "N/A", value.overview || "N/A");
@@ -72,9 +75,7 @@ function searchPageHandler(req, res) {
             errorHandler(error, req, res);
         });
 }
-app.listen(4000, () => {
-    console.log("Test :)");
-});
+
 function errorHandler(error, req, res) {
     const err = {
         status: 500,
@@ -82,3 +83,8 @@ function errorHandler(error, req, res) {
     }
     return res.status(500).send(err);
 }
+
+app.listen(4000, () => {
+    console.log("Test :)");
+});
+
