@@ -3,7 +3,8 @@
     "axios": "^0.26.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
-    "express": "^4.17.3"
+    "express": "^4.17.3",
+    "pg": "^8.7.3"
   },
   "name": "movies-library",
   "description": "**Author Name**: Haneen",
@@ -23,6 +24,5 @@
     "url": "https://github.com/HaneenAlhamdan/Movies-Library/issues"
   },
   "homepage": "https://github.com/HaneenAlhamdan/Movies-Library#readme",
-  "devDependencies": {},
   "keywords": []
 }

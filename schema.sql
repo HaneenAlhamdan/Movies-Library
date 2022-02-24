@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS addMovie;
+
+CREATE TABLE IF NOT EXISTS addMovie(
+id SERIAL PRIMARY KEY,
+release_date DATE,
+title VARCHAR(1000),
+poster_path VARCHAR(1000),
+overview VARCHAR(10000),
+my_comment VARCHAR(1000)
+);
