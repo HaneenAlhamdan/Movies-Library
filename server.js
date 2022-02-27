@@ -9,7 +9,7 @@ app.use(cors());
 const axios = require("axios");
 const dotenv = require("dotenv");
 dotenv.config();
-const APIKEY = "4a19a377a6dba141e32aa68fb5f3fe00";
+const key = process.env.APIKEY;
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
@@ -64,7 +64,7 @@ function favoritePageHandler(req, res) {
 
 function trendingPageHandler(req, res) {
     let result = [];
-    axios.get(`https://api.themoviedb.org/3/trending/all/week?api_key=${APIKEY}&language=en-US`)
+    axios.get(`https://api.themoviedb.org/3/trending/all/week?api_key=${key}&language=en-US`)
         .then(apiResponse => {
             console.log(apiResponse);
             apiResponse.data.results.map(value => {
@@ -83,7 +83,7 @@ function searchPageHandler(req, res) {
     const search = req.query.Movie;
     let result = [];
     console.log(req);
-    axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${APIKEY}&language=en-US&query=${search}&page=2`)
+    axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${key}&language=en-US&query=${search}&page=2`)
         .then(apiResponse => {
             apiResponse.data.results.map(value => {
                 let oneMovie = new Movie(value.id || "N/A", value.title || "N/A", value.release_date || "N/A", value.poster_path || "N/A", value.overview || "N/A");
