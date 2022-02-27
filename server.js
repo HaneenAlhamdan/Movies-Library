@@ -13,7 +13,11 @@ const key = process.env.APIKEY;
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
-const client = new pg.Client(DATABASE_URL);
+const client = new pg.Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
+});
+
 function Movie(id, title, release_date, poster_path, overview) {
     this.id = id;
     this.release_date = release_date;
