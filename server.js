@@ -13,7 +13,10 @@ const APIKEY = "4a19a377a6dba141e32aa68fb5f3fe00";
 
 const DATABASE_URL = process.env.DATABASE_URL;
 
-const client = new pg.Client(DATABASE_URL);
+const client = new pg.Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
+});
 function Movie(id, title, release_date, poster_path, overview) {
     this.id = id;
     this.release_date = release_date;
@@ -40,6 +43,7 @@ app.use(errorHandler);
 
 
 function homePageHandler(req, res) {
+   
     let result = [];
     movie.data.forEach((value) => {
         let oneMovie = new Movie(value.id ||"N/A" ,value.title || "N/A", value.release_date || "N/A", value.poster_path || "N/A", value.overview || "N/A");
@@ -47,9 +51,11 @@ function homePageHandler(req, res) {
 
     });
     return res.status(200).json(result);
+
 }
 ///////////////////////////////////////////////////////
 function favoritePageHandler(req, res) {
+    
 
     return res.status(200).send("Welcome to Favorite Page!!");
 }
