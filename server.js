@@ -9,7 +9,7 @@ app.use(cors());
 const axios = require("axios");
 const dotenv = require("dotenv");
 dotenv.config();
-const port= process.env.port;
+const PORT= process.env.PORT;
 const key = process.env.APIKEY;
 
 const DATABASE_URL = process.env.DATABASE_URL;
@@ -192,7 +192,7 @@ function notFoundHandler(req, res) {
 
 client.connect()
     .then(() => {
-        app.listen(port, () => {
+        app.listen(PORT, () => {
             console.log("Test :)");
         });
     }).catch(error => {
